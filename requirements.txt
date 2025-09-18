@@ -1,0 +1,9 @@
+pandas
+numpy
+boto3
+psycopg2-binary
+sqlalchemy
+redshift_connector
+prophet
+scikit-learn
+matplotlib
