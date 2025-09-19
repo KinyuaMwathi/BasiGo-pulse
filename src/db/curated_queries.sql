@@ -75,17 +75,3 @@ SELECT
     SUM(m.downtime_hours) AS total_downtime
 FROM public.maintenance m
 GROUP BY m.date, m.bus_id;
-
--- 5. Forecast comparison
-DROP TABLE IF EXISTS public.forecasts_comparison;
-CREATE TABLE public.forecasts_comparison AS
-SELECT
-    drm.date,
-    drm.route_id,
-    drm.total_passengers,
-    drm.total_revenue,
-    drm.expected_passengers,
-    drm.expected_revenue,
-    drm.profit,
-    drm.variance_vs_expected
-FROM public.daily_route_metrics drm;
