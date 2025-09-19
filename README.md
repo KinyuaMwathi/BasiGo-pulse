@@ -8,7 +8,7 @@ BasiGo Pulse is an end-to-end data product built on AWS that ingests operational
 - Mock datasets for 6 Nairobi operators (Citi Hoppa, East Shuttle, Super Metro, OMA, MetroTrans, Embassava)
 - Covers **routes, trips, telematics, financials, and maintenance**
 - Serverless setup on AWS (S3, Redshift, QuickSight)
-- Business-ready dashboards for passenger trends, revenue vs forecast, and cost efficiency
+- Business-ready dashboards
 
 ---
 
@@ -21,6 +21,11 @@ BasiGo Pulse is an end-to-end data product built on AWS that ingests operational
 - **SQL (DDL/DML)** → Schema creation and data loading
 
 ---
+
+## 📊 Dashboard
+Access the BasiGo Pulse dashboard: [View Dashboard](https://basigo-pulse-public-dashboard.s3.us-east-1.amazonaws.com/BasiGo-Pulse-Dashboard.pdf)
+
+- The link above leads to a PDF document rather than a live dashboard. This is due to limitations with Amazon QuickSight Standard Edition, which doesn't support sharing live dashboards publicly without authentication.
 
 ## Setup
 
