@@ -7,7 +7,7 @@ BasiGo Pulse is an end-to-end data product built on AWS that ingests operational
 ## Features
 - Mock datasets for 6 Nairobi operators (Citi Hoppa, East Shuttle, Super Metro, OMA, MetroTrans, Embassava)
 - Covers **routes, trips, telematics, financials, and maintenance**
-- Serverless setup on AWS Free Tier (S3, Redshift, QuickSight)
+- Serverless setup on AWS (S3, Redshift, QuickSight)
 - Business-ready dashboards for passenger trends, revenue vs forecast, and cost efficiency
 
 ---
