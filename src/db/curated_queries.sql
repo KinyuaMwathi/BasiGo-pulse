@@ -76,7 +76,7 @@ SELECT
 FROM public.maintenance m
 GROUP BY m.date, m.bus_id;
 
--- 5. Forecast comparison (optional)
+-- 5. Forecast comparison
 DROP TABLE IF EXISTS public.forecasts_comparison;
 CREATE TABLE public.forecasts_comparison AS
 SELECT
