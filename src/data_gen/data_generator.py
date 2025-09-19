@@ -11,7 +11,7 @@ os.makedirs(DATA_DIR, exist_ok=True)
 
 fake = Faker()
 
-# Define operators & routes (actual BasiGo operators and their routes)
+# Define operators & routes
 routes_data = [
     ("R01", "Citi Hoppa", "CBD", "Airport", 18, 40),
     ("R02", "East Shuttle", "City Stadium", "Dandora", 12, 35),
@@ -48,7 +48,7 @@ for rid, operator, origin, dest, dist, cap in routes_data:
                 revenue = passengers * ticket_price
 
                 # Forecast vs Actual
-                expected_passengers = int(cap * np.random.uniform(0.8, 1.1))
+                expected_passengers = int(cap * np.random.uniform(0.6, 0.95))
                 expected_revenue = expected_passengers * ticket_price
 
                 trips_records.append([
@@ -92,13 +92,15 @@ for (rid, operator, origin, dest, dist, cap) in routes_data:
             (trips_df["date"] == date.date()) & (trips_df["route_id"] == rid),
             "revenue"
         ].sum()
-        energy_cost = np.random.randint(5000, 10000)
-        driver_cost = np.random.randint(3000, 7000)
-        maintenance_cost = np.random.randint(1000, 4000)
+
+        # Costs capped at 40% of revenue
+        energy_cost = int(revenue * np.random.uniform(0.05, 0.15))
+        driver_cost = int(revenue * np.random.uniform(0.1, 0.15))
+        maintenance_cost = int(revenue * np.random.uniform(0.05, 0.1))
         total_cost = energy_cost + driver_cost + maintenance_cost
 
-        # Forecast vs Actual
-        expected_revenue = revenue * np.random.uniform(0.9, 1.1)
+        # Expected revenue is slightly lower than actual revenue
+        expected_revenue = revenue * np.random.uniform(0.85, 0.95)
 
         financials_records.append([
             fake.uuid4(), date.date(), rid, revenue,
@@ -123,7 +125,9 @@ for rid, operator, origin, dest, dist, cap in routes_data:
             issue = random.choice([
                 "Battery Fault", "Brake Issue", "Software Update", "Suspension", "Motor Fault"
             ])
-            cost = np.random.randint(500, 5000)
+            # Cap maintenance cost at 40% of average ticket revenue per trip for that bus
+            avg_revenue_per_trip = trips_df.loc[trips_df["bus_id"] == bus_id, "revenue"].mean()
+            cost = min(np.random.randint(500, 5000), int(avg_revenue_per_trip * 0.4))
             downtime = round(np.random.uniform(1, 5), 1)
             maintenance_records.append([
                 fake.uuid4(), bus_id, date.date(), issue, cost, downtime
@@ -134,4 +138,4 @@ maintenance_df = pd.DataFrame(maintenance_records, columns=[
 ])
 maintenance_df.to_csv(os.path.join(DATA_DIR, "maintenance.csv"), index=False)
 
-print("✅ Mock CSVs generated in ./data/ with forecast vs actual fields")
+print("✅ Mock CSVs generated in ./data/ with capped costs and expected revenue < actual revenue")
