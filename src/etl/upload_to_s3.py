@@ -8,6 +8,16 @@ DATA_DIR = os.path.join(os.path.dirname(__file__), "../../data")
 # Initialize S3 client
 s3 = boto3.client("s3")
 
+def delete_file(s3_key):
+    """
+    Delete a file from S3
+    """
+    try:
+        s3.delete_object(Bucket=BUCKET_NAME, Key=s3_key)
+        print(f"🗑️ Deleted s3://{BUCKET_NAME}/{s3_key}")
+    except Exception as e:
+        print(f"❌ Error deleting {s3_key}: {str(e)}")
+
 def upload_file(local_path, s3_key):
     """
     Upload a file to S3
@@ -28,6 +38,9 @@ def main():
     }
 
     for s3_key, local_path in files.items():
+        # Delete existing file in S3 first
+        delete_file(s3_key)
+        # Upload fresh file
         upload_file(local_path, s3_key)
 
 if __name__ == "__main__":
